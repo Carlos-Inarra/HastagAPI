@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import render_template,request,session,jsonify
 from HastagAPI import app
 from requests import get, post
@@ -10,7 +9,7 @@ def Enviar_mensagem(MSG):
     data = {'chat_id':id,'text':MSG}
     post(url,data)
 
-@app.route("/webhooks",methods=["GET,POST"])
+@app.route("/webhooks",methods=["GET","POST"])
 def EstacaZero():
     dados = request.json
     Enviar_mensagem(dados)

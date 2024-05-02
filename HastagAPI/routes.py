@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from HastagAPI import app,db 
 from requests import get, post
 import json,hash,datetime
-
+ 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Usuario = db.Column(db.String(80), unique=False, nullable=False)
@@ -25,19 +25,20 @@ def create_tables():
 @app.route("/EntradaDeWebhooks",methods=["POST"])
 def Webhooks():
     Dados = json.loads(request.data)
-    match Dados["status"]:
+    Nome,Email,Status = Dados["nome"],Dados["email"],Dados["status"]
+    match Status:
         case 'aprovado':
-            log = Webhook(Evento=f"Sistema Liberou o acesso do cliente {Dados["nome"]} que possui o email:{Dados["email"]}!",Dados=Dados)
+            log = Webhook(Evento=f"Sistema Liberou o acesso do cliente {Nome} que possui o email:{Email}!",Dados=Dados)
             print("Seja bem vindo Impressionador(a)!")
         case 'recusado':
-            log = Webhook(Evento=f"Sistema Recusou o acesso do cliente {Dados["nome"]} que possui o email:{Dados["email"]}!",Dados=Dados)
+            log = Webhook(Evento=f"Sistema Recusou o acesso do cliente {Nome} que possui o email:{Email}!",Dados=Dados)
             print("Pagamento recusado.")
         case 'reembolsado':
-            log = Webhook(Evento=f"Sistema Retirou o acesso do cliente {Dados["nome"]} que possui o email:{Dados["email"]}!",Dados=Dados)
+            log = Webhook(Evento=f"Sistema Retirou o acesso do cliente {Nome} que possui o email:{Email}!",Dados=Dados)
             Acesso = None
         case _:
             log = Webhook(Evento=f"Falha na tratativa",Dados=Dados)
-            print(f"Status do pagamento desconhecido: {Dados["status"]}")
+            print(f"Status do pagamento desconhecido: {Status}")
     db.session.add(log)
     db.session.commit()
 

@@ -24,7 +24,9 @@ def Webhooks():
     Nome,Email,Status = Dados["nome"],Dados["email"],Dados["status"]
     match Status:
         case 'aprovado':
-            log = Webhooks(Evento=f"Sistema Liberou o acesso do cliente {Nome} que possui o email:{Email}!",Dados=Dados)
+            log = Webhooks()
+            log.Evento=f"Sistema Liberou o acesso do cliente {Nome} que possui o email:{Email}!"
+            log.Dados=Dados
             print("Seja bem vindo Impressionador(a)!")
         case 'recusado':
             log = Webhooks(Evento=f"Sistema Recusou o acesso do cliente {Nome} que possui o email:{Email}!",Dados=Dados)

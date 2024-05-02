@@ -12,7 +12,7 @@ def Enviar_mensagem(MSG):
 
 @app.route("/webhooks",methods=["GET","POST"])
 def EstacaZero():
-    dados = request.json
+    dados = request.data
     print(dados)
     Enviar_mensagem(dados)
     return "Hello"

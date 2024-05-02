@@ -13,8 +13,7 @@ def Enviar_mensagem(MSG):
 
 @app.route("/EntradaDeWebhooks",methods=["POST"])
 def Webhooks():
-    # dados = json.dumps(str((request.data))[2:-1])
-    dados = request.get_json()
+    dados = json.loads(request.data)
     Enviar_mensagem(dados)
     return "Hello"
 

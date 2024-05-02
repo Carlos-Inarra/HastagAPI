@@ -2,7 +2,8 @@ from flask import redirect, render_template,request,session,jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from HastagAPI import app,db 
 from requests import get, post
-import json,datetime
+import json
+from datetime import datetime
  
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +15,7 @@ class User(db.Model):
 class Webhook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Evento = db.Column(db.String(50), nullable=False)
-    Tempo = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    Tempo = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     Dados = db.Column(db.String(250))
 
 @app.before_first_request

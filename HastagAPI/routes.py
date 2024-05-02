@@ -2,7 +2,7 @@ from flask import redirect, render_template,request,session,jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from HastagAPI import app,db 
 from requests import get, post
-import json,hash,datetime
+import json,datetime
  
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

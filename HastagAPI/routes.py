@@ -1,7 +1,6 @@
 from flask import redirect, render_template,request,session,jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
 from HastagAPI import app,db 
-from requests import get, post
 import json
 from datetime import datetime
  
@@ -108,7 +107,7 @@ def Login():
             log.dados=f"{usuarioForm}"
             db.session.add(log)
             db.session.commit()
-            return redirect("BancoDeDados")
+            return redirect(url_for("BancoDeDados"))
 
 
 @app.route("/BancoDeDados",methods=["POST","GET"])

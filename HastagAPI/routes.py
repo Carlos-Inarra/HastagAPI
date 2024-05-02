@@ -18,11 +18,6 @@ class Webhook(db.Model):
     Tempo = db.Column(db.DateTime, nullable=False, default=datetime.utcnow())
     Dados = db.Column(db.String(250))
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
-
 @app.route("/EntradaDeWebhooks",methods=["POST"])
 def Webhooks():
     Dados = json.loads(request.data)

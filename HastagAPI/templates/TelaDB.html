@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/BancoDeDados">
+    <form action="/BancoDeDados" method="post">
       <select name="Usuario" id="Usuario">
         {% for usuario in Logs%}
         <option value="{{usuario[0]}}">{{usuario[0]}}</option>

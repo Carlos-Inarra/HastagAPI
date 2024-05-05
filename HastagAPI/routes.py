@@ -1,5 +1,6 @@
 from flask import redirect, render_template,request,session, url_for,make_response
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Nullable
 from HastagAPI import app,db 
 import json
 from datetime import datetime
@@ -17,8 +18,8 @@ class Webhooks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Evento = db.Column(db.String(250), nullable=False)
     Tempo = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    Dados = db.Column(db.String(250))
-    Usuario = db.Column(db.String(25))
+    Dados = db.Column(db.String(250),Nullable=False)
+    Usuario = db.Column(db.String(25),Nullable=False)
 
 def Logado(funcao_original):
     @wraps(funcao_original)
@@ -130,9 +131,7 @@ def BancoDeDados():
     else:
         usuario = request.form["Usuario"]
         Logs = []
-        print(Logs)
         for i in Webhooks.query.filter_by(Usuario=usuario).all():
-            print((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id))
             Logs.append((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id) )
         return render_template("TelaDB.html",Logs=Logs)
 

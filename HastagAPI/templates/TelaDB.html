@@ -7,7 +7,7 @@
 </head>
 <body>
     <form action="/BancoDeDados">
-      <select name="Usuario" id="">
+      <select name="Usuario" id="Usuario">
         {% for usuario in Logs%}
         <option value="{{usuario[0]}}">{{usuario[0]}}</option>
         {%endfor%}

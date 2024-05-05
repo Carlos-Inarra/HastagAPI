@@ -130,7 +130,9 @@ def BancoDeDados():
     else:
         usuario = request.form["Usuario"]
         Logs = []
+        print(Logs)
         for i in Webhooks.query.filter_by(Usuario=usuario).all():
+            print((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id))
             Logs.append((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id) )
         return render_template("TelaDB.html",Logs=Logs)
 

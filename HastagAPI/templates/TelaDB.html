@@ -6,6 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <p>hello World</p>
+    <table>
+        <tr>
+          <th>ID</th>
+          <th>Evento</th>
+          <th>Dados</th>
+          <th>Data</th>
+        </tr>
+        {% for linha in Logs %}
+        <tr>
+          <td>{{linha[-1]}}</td>
+          <td>{{linha[0]}}</td>
+          <td>{{linha[1]}}</td>
+          <td>{{linha[2]}}</td>
+        </tr>
+        {% endfor %}
+      </table>
 </body>
 </html>

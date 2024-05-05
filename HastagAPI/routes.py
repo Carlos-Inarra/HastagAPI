@@ -33,22 +33,22 @@ def Webhook():
             case 'aprovado':
                 log = Webhooks()
                 log.Evento=f"Sistema Liberou o acesso do cliente {Nome} que possui o email:{Email}!"
-                log.Dados=Dados
+                log.Dados=str(Dados)
                 print("Seja bem vindo Impressionador(a)!")
             case 'recusado':
                 log = Webhooks()
                 log.Evento=f"Sistema Recusou o acesso do cliente {Nome} que possui o email:{Email}!"
-                log.Dados=Dados
+                log.Dados=str(Dados)
                 print("Pagamento recusado.")
             case 'reembolsado':
                 log = Webhooks()
                 log.Evento=f"Sistema Retirou o acesso do cliente {Nome} que possui o email:{Email}!"
-                log.Dados=Dados
+                log.Dados=str(Dados)
                 Acesso = None
             case _:
                 log = Webhooks()
                 log.Evento=f"Falha na tratativa"
-                log.Dados=Dados
+                log.Dados=str(Dados)
                 print(f"Status do pagamento desconhecido: {Status}")
         db.session.add(log)
         db.session.commit()
@@ -61,19 +61,8 @@ def Cadastro():
     else:
         Token = str(request.form["token"])
         if Token != "uhdfaAADF123":
-            log = Webhooks()
-            log.Evento=f"Sistema negou o cadastro de um usuario que utilizou um token diferente do permitido!"
-            log.dados=f"Token utilizado{Token}"
-            db.session.add(log)
-            db.session.commit()
             return "Acesso Negado"
         elif User.query.filter_by(email=(str(request.form["email"]).lower())).first() != None:
-            log = Webhooks()
-            log.Evento=f"Sistema negou o cadastro de um usuario que possuir cadastro!"
-            email = request.form["email"]
-            log.dados=f"email utilizado:{email}"
-            db.session.add(log)
-            db.session.commit()
             render_template("CadastroUsuario.html",Informacao = "Email já cadastrado!, você será redirecionado para a tela de login")
             time.sleep(5)
             return redirect(url_for("Login"))
@@ -88,11 +77,6 @@ def Cadastro():
             user.token = Token
             db.session.add(user)
             db.session.commit()
-            log = Webhooks()
-            log.Evento=f"Usuario cadastrado com sucesso!"
-            log.dados=f"Usuario:{Usuario},Email:{Email}"
-            db.session.add(log)
-            db.session.commit()
             return redirect(url_for("Login"))
 
 @app.route("/Login",methods=["POST","GET"])
@@ -105,32 +89,20 @@ def Login():
         usuarioDB = User.query.filter_by(email=(str(usuarioForm).lower())).first()
         if usuarioDB != None:
             if  str(senha) != str(usuarioDB.senha):
-                log = Webhooks()
-                log.Evento=f"Tentativa de login sem suceso!"
-                log.dados=f"{usuarioForm}"
-                db.session.add(log)
-                db.session.commit()
                 return render_template("LoginUsuario.html",Informacao = "Senha Incorreta")
             elif str(senha) == str(usuarioDB.senha) and str(
                 usuarioForm).lower().replace(" ","") == str(usuarioDB.email).lower().replace(" ",""):
-                log = Webhooks()
-                log.Evento=f"Usuario logado com suceso!"
-                log.dados=f"{usuarioForm}"
-                db.session.add(log)
-                db.session.commit()
                 return redirect(url_for("BancoDeDados"))
         else:
-            log = Webhooks()
-            log.Evento=f"Tentativa de login sem suceso!"
-            log.dados=f"{usuarioForm}"
-            db.session.add(log)
-            db.session.commit()
             return render_template("LoginUsuario.html",Informacao = "Usuario Não Cadastrado")
 
 
 @app.route("/BancoDeDados",methods=["POST","GET"])
 def BancoDeDados():
-    return render_template("TelaDB.html")
+    Logs = []
+    for i in Webhooks.query.all():
+        Logs.append((i.Evento,i.Dados,str(i.Tempo)[:7],i.id) )
+    return render_template("TelaDB.html",Logs=Logs)
 
 
     

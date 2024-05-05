@@ -18,8 +18,8 @@ class Webhooks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Evento = db.Column(db.String(250), nullable=False)
     Tempo = db.Column(db.DateTime, nullable=False, default=datetime.now())
-    Dados = db.Column(db.String(250),Nullable=False)
-    Usuario = db.Column(db.String(25),Nullable=False)
+    Dados = db.Column(db.String(250),nullable=False)
+    Usuario = db.Column(db.String(25),nullable=False)
 
 def Logado(funcao_original):
     @wraps(funcao_original)

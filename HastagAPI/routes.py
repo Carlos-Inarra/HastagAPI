@@ -114,14 +114,13 @@ def Login():
                 return render_template("LoginUsuario.html",Informacao = "Senha Incorreta")
             elif str(senha) == str(usuarioDB.senha) and str(
                 usuarioForm).lower().replace(" ","") == str(usuarioDB.email).lower().replace(" ",""):
-                resp = make_response("Sucess")
-                resp.set_cookie('Usuario', 'Carlos Inarra')
+                session["usuario"] = usuarioForm
                 return redirect(url_for("BancoDeDados"))
         else:
             return render_template("LoginUsuario.html",Informacao = "Usuario Não Cadastrado")
 
-@Logado
 @app.route("/BancoDeDados",methods=["POST","GET"])
+@Logado
 def BancoDeDados():
     if request.method == "GET":
         Logs = []

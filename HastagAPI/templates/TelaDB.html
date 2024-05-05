@@ -8,6 +8,7 @@
 <body>
     <table>
         <tr>
+          <th>Usuario</th>
           <th>ID</th>
           <th>Evento</th>
           <th>Dados</th>
@@ -15,9 +16,10 @@
         </tr>
         {% for linha in Logs %}
         <tr>
-          <td>{{linha[-1]}}</td>
           <td>{{linha[0]}}</td>
+          <td>{{linha[-1]}}</td>
           <td>{{linha[1]}}</td>
+          <td>{{linha[2]}}</td>
           <td>{{linha[2]}}</td>
         </tr>
         {% endfor %}

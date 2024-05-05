@@ -6,6 +6,13 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="/BancoDeDados">
+      <select name="Usuario" id="">
+        {% for usuario in len(Logs)%}
+        <option value="{{usuario[0]}}">{{usuario[0]}}</option>
+      </select>
+      <button type="submit">Filtrar</button>
+    </form>
     <table>
         <tr>
           <th>Usuario</th>
@@ -20,9 +27,17 @@
           <td>{{linha[-1]}}</td>
           <td>{{linha[1]}}</td>
           <td>{{linha[2]}}</td>
-          <td>{{linha[2]}}</td>
+          <td>{{linha[3]}}</td>
         </tr>
         {% endfor %}
       </table>
+
+    <style>
+      table{
+        width: 80vw;
+        height: 90vh;
+        overflow: scroll;
+      }
+    </style>
 </body>
 </html>

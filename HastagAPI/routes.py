@@ -123,10 +123,18 @@ def Login():
 @Logado
 @app.route("/BancoDeDados",methods=["POST","GET"])
 def BancoDeDados():
-    Logs = []
-    for i in Webhooks.query.all():
-        Logs.append((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id) )
-    return render_template("TelaDB.html",Logs=Logs)
+    if request.method == "GET":
+        Logs = []
+        for i in Webhooks.query.all():
+            Logs.append((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id) )
+        return render_template("TelaDB.html",Logs=Logs)
+    else:
+        usuario = request.form["Usuario"]
+        Logs = []
+        for i in Webhooks.query.filter_by(Usuario=usuario).all():
+            Logs.append((i.Usuario,i.Evento,i.Dados,str(i.Tempo)[:-7],i.id) )
+        return render_template("TelaDB.html",Logs=Logs)
+
 
 
     

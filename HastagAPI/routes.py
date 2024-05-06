@@ -84,12 +84,11 @@ def Cadastro():
         return render_template("CadastroUsuario.html")
     else:
         Token = str(request.form["token"])
+        email = (User.query.filter_by(email=(str(request.form["email"]).lower())).first()).email
         if Token != "uhdfaAADF123":
             return "Acesso Negado"
-        elif User.query.filter_by(email=(str(request.form["email"]).lower())).first() != None:
-            render_template("CadastroUsuario.html",Informacao = "Email já cadastrado!, você será redirecionado para a tela de login")
-            sleep(5)
-            return redirect(url_for("Login"))
+        elif "@" in email:
+            return render_template("CadastroUsuario.html",Informacao = "Email já cadastrado!")
         else:
             Usuario = str( request.form["usuario"])
             Senha = hash(request.form["Senha"])

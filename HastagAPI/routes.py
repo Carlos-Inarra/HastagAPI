@@ -84,7 +84,10 @@ def Cadastro():
         return render_template("CadastroUsuario.html")
     else:
         Token = str(request.form["token"])
-        email = (User.query.filter_by(email=(str(request.form["email"]).lower())).first()).email
+        try:
+            email = (User.query.filter_by(email=(str(request.form["email"]).lower())).first()).email
+        except:
+            email = ""
         if Token != "uhdfaAADF123":
             return "Acesso Negado"
         elif "@" in email:

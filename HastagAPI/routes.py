@@ -17,7 +17,7 @@ class User(db.Model):
 class Webhooks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Evento = db.Column(db.String(250), nullable=False)
-    Tempo = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    Tempo = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=""))
     Dados = db.Column(db.String(250),nullable=False)
     Usuario = db.Column(db.String(25),nullable=False)
 

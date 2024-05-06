@@ -21,6 +21,7 @@ class Webhooks(db.Model):
     Dados = db.Column(db.String(250),nullable=False)
     Usuario = db.Column(db.String(25),nullable=False)
 
+
 def Logado(funcao_original):
     @wraps(funcao_original)
     def wrapper(*args, **kwargs):

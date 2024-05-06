@@ -8,6 +8,7 @@
 <body>
     <form action="/BancoDeDados" method="post">
       <select name="Usuario" id="Usuario">
+        <option value="USUARIOPADRAO">Selecione um Usuario</option>
         {% for usuario in Logs%}
         <option value="{{usuario[0]}}">{{usuario[0]}}</option>
         {%endfor%}
@@ -24,7 +25,7 @@
         </tr>
         {% for linha in Logs %}
         <tr>
-          <td>{{linha[0]}}</td>
+          <td style="text-align: left;text-indent: 3px;" >{{linha[0]}}</td>
           <td>{{linha[-1]}}</td>
           <td>{{linha[1]}}</td>
           <td>{{linha[2]}}</td>
@@ -34,10 +35,28 @@
       </table>
 
     <style>
+      body{
+        display:flex ;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        align-items: center;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
       table{
+        background-color: ghostwhite;
         width: 80vw;
         height: 90vh;
         overflow: scroll;
+
+        & th{
+          background-color: darkslateblue;
+          height: 5vh;
+          color: aliceblue;
+          font-weight: bold;
+          align-items: center;
+        }
       }
     </style>
 </body>
